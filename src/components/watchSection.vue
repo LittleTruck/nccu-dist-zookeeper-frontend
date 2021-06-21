@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <!-- ======= About Section ======= -->
     <div>
     <section id="about" class="about">
@@ -94,7 +94,7 @@
                 let flag=0;
                 let player=videojs('myVideo');
                 let videoUrl = "http://" + this.host + ":1935" + this.videoInfo.Url;
-                let vm= this;
+                let that = this;
                 
                 player.ready(function(){
                     player.src({
@@ -132,26 +132,21 @@
                             console.log(flag);
                             if(flag<5){
                                 setTimeout(() => {
-                                    vm.getVideoInfo();
+                                    that.getVideoInfo();
                                 }, 1000);
                             }
                         });
                     });
                 
-                    //播放时长(秒)
                     let totalTime = 0;
-                    // 监听播放进度
                     player.on('timeupdate', function() {
-                        //当前播放时长(秒)
                         let currentTime = Math.floor(player.currentTime());
                         if (currentTime > 0 && currentTime > totalTime && (currentTime % 5 === 0)) {
-                            //每隔5秒，向服务器提交播放时间(秒)
                             lastLearnTime=currentTime;                           
                         }
                         totalTime = currentTime;
                     });
                 
-                    // 使用事件监听
                     player.on('ended', function() {
                         console.log('播放結束');
                     });
